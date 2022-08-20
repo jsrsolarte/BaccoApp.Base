@@ -31,6 +31,8 @@ on:
     secrets:
       gcloud_service_key:
         required: true
+      GITHUB_TOKEN:
+        required: true
 
 jobs:
   deploy:
