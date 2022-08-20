@@ -55,5 +55,5 @@ jobs:
         uses: Azure/setup-helm@v3.3
         
       - name: Deploy
-        run: helm upgrade ${{ inputs.application }}-${{ inputs.project }}-${{ inputs.environment }} -n ${{ inputs.application }}-${{ inputs.environment }} -f ${{ inputs.helm_path }}/values.-${{ inputs.environment }}.yaml --set image.repository=${{ inputs.application }}-${{ inputs.project }}-${{ inputs.environment }} --set image.tag=${{ inputs.tag }} --set version=${{ inputs.tag }} -i ${{ inputs.helm_path }}/
+        run: helm upgrade ${{ inputs.application }}-${{ inputs.project }}-${{ inputs.environment }} -n ${{ inputs.application }}-${{ inputs.environment }} -f ${{ inputs.helm_path }}/values.${{ inputs.environment }}.yaml --set image.repository=${{ inputs.application }}-${{ inputs.project }}-${{ inputs.environment }} --set image.tag=${{ inputs.tag }} --set version=${{ inputs.tag }} -i ${{ inputs.helm_path }}/
 
