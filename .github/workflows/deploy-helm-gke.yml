@@ -1,0 +1,59 @@
+name: deploy to GKE with helm-charts
+
+on:
+  workflow_call:
+    inputs:
+      cluster_name:
+        required: true
+        type: string
+      location:
+        required: true
+        type: string
+      project_id:
+        required: true
+        type: string
+      project:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+      application:
+        required: true
+        type: string
+      tag:
+        required: true
+        type: string
+      helm_path:
+        required: true
+        type: string
+        
+    secrets:
+      gcloud_service_key:
+        required: true
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - id: auth
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.gcloud_service_key }}
+
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@v0
+        with:
+          cluster_name: ${{ inputs.cluster_name }}
+          location: ${{ inputs.location }}
+          project_id: ${{ inputs.project_id}
+          create_credentials_file: false
+                
+      - name: Helm tool installer
+        uses: Azure/setup-helm@v3.3
+        
+      - name: Deploy
+        run: helm upgrade ${{ inputs.application }}-${{ inputs.project }}-${{ inputs.environment }} -n ${{ inputs.application }}-${{ inputs.environment }} -f ${{ inputs.helm_path }}/values.-${{ inputs.environment }}.yaml --set image.repository=${{ inputs.application }}-${{ inputs.project }}-${{ inputs.environment }} --set image.tag=${{ inputs.tag }} --set version=${{ inputs.tag }} -i ${{ inputs.helm_path }}/
+
