@@ -11,6 +11,7 @@ on:
         type: string
       sonar_exclusions:
         required: false
+        type: string
         default: ''
 
     secrets:
