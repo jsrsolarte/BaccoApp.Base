@@ -48,7 +48,7 @@ jobs:
         with:
           cluster_name: ${{ inputs.cluster_name }}
           location: ${{ inputs.location }}
-          project_id: ${{ inputs.project_id}
+          project_id: ${{ inputs.project_id }}
           create_credentials_file: false
                 
       - name: Helm tool installer
