@@ -39,6 +39,6 @@ jobs:
         gcloud_service_key: ${{ secrets.gcloud_service_key }} # can be base64 encoded or plain text
         registry: ${{ inputs.registry }}
         project_id: ${{ inputs.project_id }}
-        image_name: ${{ inputs.application }}-${{ inputs.project }}-${{ inputs.env }}
+        image_name: ${{ inputs.application }}-${{ inputs.project }}-${{ inputs.environment }}
         image_tag: latest,${{ inputs.tag }}
         dockerfile: ${{ inputs.dockerfile_path }}
