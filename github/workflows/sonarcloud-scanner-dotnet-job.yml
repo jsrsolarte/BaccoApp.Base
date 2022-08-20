@@ -1,4 +1,4 @@
-name: sonar-scanner-dotnet-job
+name: sonar-scanner dotnet job
 
 on:
   workflow_call:
@@ -61,7 +61,7 @@ jobs:
       - name: Build
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ inputs.application }}" /o:"${{ inputs.application }}" /d:sonar.qualitygate.wait=true /d:sonar.login="${{ secrets.sonar_token }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.exclusions="${{ inputs.sonar_exclusions }}"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"${{ inputs.application }}-${{ inputs.project }}" /o:"${{ inputs.application }}" /d:sonar.qualitygate.wait=true /d:sonar.login="${{ secrets.sonar_token }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml /d:sonar.exclusions="${{ inputs.sonar_exclusions }}"
           dotnet build --no-incremental
           dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.sonar_token }}"
